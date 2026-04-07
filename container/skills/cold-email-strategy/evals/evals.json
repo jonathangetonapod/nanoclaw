@@ -1,0 +1,99 @@
+{
+  "skill_name": "cold-email-strategy",
+  "domain": "copywriting",
+  "evals": [
+    {
+      "id": 1,
+      "name": "b2b-saas-tool",
+      "prompt": "Create a cold email strategy for PostPilot, a B2B SaaS tool that automates social media scheduling and analytics for marketing agencies. Pricing: $149/mo starter, $349/mo growth. Founded by Sarah Chen. Website: postpilot.io. They have a case study where a 12-person agency went from posting 3x/week to daily across 8 client accounts, saving 15 hours/week. Competitors: Hootsuite, Buffer, Sprout Social, Later. CTA: Book a demo. Sequencer: Email Bison. Sender: Sarah Chen, Founder.",
+      "expected_output": "Complete 4-section strategy document with discovery summary, ICP, offer positioning, and 3 messaging angles targeting marketing agency owners/founders",
+      "expectations": [
+        "Output contains all 4 sections: Discovery, ICP, Offer Positioning, Messaging Strategy",
+        "ICP targets MARKETING AGENCIES (the customer), not 'SaaS' or 'Software' companies (the product's industry)",
+        "ICP company keywords describe the customer's business (e.g., 'marketing agency', 'social media management', 'digital marketing') NOT the product's features",
+        "ICP includes job titles with buying authority (Founder, CEO, Owner, Director-level)",
+        "ICP includes negative filters to exclude competitors and irrelevant companies",
+        "Pain points are specific and surgical, not generic (reference specific agency pain like juggling client accounts, missed posting schedules, time spent on scheduling)",
+        "AI qualification prompt is present and copy-paste ready with placeholder variables",
+        "Offer positioning identifies a clear value lever (save time, save money, or make money)",
+        "3 distinct messaging angles present (Pain Dagger, Proof Machine, Value Gift) that are genuinely different approaches, not reworded versions of the same pitch",
+        "Tone profile includes formality scale (1-5), personality traits, and banned words",
+        "Front-end offer or lead magnet strategy is defined",
+        "Implicit objections mapped with counters (at least 3)",
+        "Output references Email Bison as the sequencer",
+        "No AI slop words (delve, leverage, synergy, game-changer, revolutionize, cutting-edge)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "local-service-business",
+      "prompt": "Create a cold email strategy for TexasComfort HVAC, a commercial HVAC maintenance and installation company in Houston, TX. They specialize in preventive maintenance contracts for office buildings, retail spaces, and warehouses. Pricing: maintenance contracts start at $500/mo per building. They have 18 years experience, 200+ commercial buildings under contract, and a 98% emergency response rate within 4 hours. Competitors: local HVAC contractors, national chains like Comfort Systems USA. CTA: Book a building walkthrough. Sequencer: Instantly. Senders: Mike Torres (Owner), Lisa Park (Account Manager).",
+      "expected_output": "Complete 4-section strategy targeting commercial property managers and facility directors in Houston metro area",
+      "expectations": [
+        "Output contains all 4 sections: Discovery, ICP, Offer Positioning, Messaging Strategy",
+        "ICP targets PROPERTY MANAGERS and FACILITY DIRECTORS (the customers), not 'HVAC' companies",
+        "ICP geography is specific to Houston/Texas metro area",
+        "ICP company size is appropriate for commercial property management (not targeting enterprise or solopreneur)",
+        "Pain points reference HVAC-specific problems (equipment downtime, tenant complaints, energy costs, emergency repairs, compliance)",
+        "Pain points are phrased as acute questions that make the prospect feel understood, not generic marketing questions",
+        "Offer positioning uses the 'So What?' framework to reach human outcomes, not just feature lists",
+        "Front-end offer leverages the free building walkthrough CTA effectively",
+        "3 messaging angles are genuinely different entry points into the same offer",
+        "Tone profile matches a local service business (not overly corporate, not too casual)",
+        "Output references Instantly as the sequencer (not Email Bison)",
+        "Case study data (200+ buildings, 98% response rate, 18 years) is woven into proof elements, not ignored"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "professional-services-high-ticket",
+      "prompt": "Create a cold email strategy for Meridian CFO Partners, a fractional CFO firm targeting Series A and Series B SaaS startups. They provide financial modeling, fundraising support, board reporting, and cash runway management. Pricing: $8,000-$15,000/mo retainer. Case study: helped a Series A fintech extend their runway by 9 months through cost optimization, then led their Series B raise ($18M). Competitors: Pilot, Bench (lower-end), Big 4 advisory (higher-end), in-house hire. CTA: 30-minute strategy call. Sequencer: Email Bison. Sender: David Park, Managing Partner.",
+      "expected_output": "Complete 4-section strategy targeting SaaS startup founders and C-suite with executive-appropriate tone",
+      "expectations": [
+        "Output contains all 4 sections: Discovery, ICP, Offer Positioning, Messaging Strategy",
+        "ICP targets STARTUP FOUNDERS and C-SUITE at SaaS companies (CEO, COO, VP Finance), not 'financial services' or 'accounting' companies",
+        "ICP company size targets funded startups (Series A/B stage, likely 20-150 employees)",
+        "ICP includes buying triggers relevant to startups (recent funding round, hiring finance roles, board meeting prep)",
+        "Pain points are specific to funded startup pain (burn rate anxiety, investor reporting pressure, not having a finance leader, fundraising prep)",
+        "Offer positioning handles the high price point appropriately — positions against the cost of a full-time CFO hire ($200K+), not against cheaper bookkeeping services",
+        "Implicit objections address the 'we can't afford $8K-15K/mo' concern with ROI framing",
+        "Tone profile is appropriately formal (3-4 on 1-5 scale) for executive audience",
+        "Messaging angles differentiate between pain-driven, proof-driven, and value-driven approaches",
+        "The $18M Series B case study is featured prominently in the Proof Machine angle",
+        "No AI slop words or overly salesy language inappropriate for executive audience"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "edge-case-minimal-context",
+      "prompt": "Create a cold email strategy for my company.",
+      "expected_output": "The skill should NOT generate a strategy with made-up details. It should ask discovery questions to gather the required information.",
+      "expectations": [
+        "Does NOT generate a full strategy with fabricated company details",
+        "Asks discovery questions about the company, offer, target customer, pricing, case studies",
+        "References the discovery interview framework (what info is needed and why)",
+        "Asks about CTA strategy (book a call vs lead magnet)",
+        "Asks about sequencer preference (Email Bison or Instantly)",
+        "Asks about sender personas",
+        "Offers to process materials (transcripts, docs, recordings) if available",
+        "Tone is helpful and structured, not overwhelming with too many questions at once"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "edge-case-transcript-ingestion",
+      "prompt": "Create a cold email strategy for BrightPath Recruiting. Here's a transcript from a sales call:\n\nSARAH (Founder): So what we do is, we place software engineers — specifically full-stack and backend devs — for mid-size tech companies. Not the Googles and Metas, but the Series B through D companies that are scaling their engineering teams.\n\nPROSPECT: How do you differ from the hundred other recruiters in my inbox?\n\nSARAH: Fair question. Two things. First, we only work with engineers who've passed our technical screen — it's a 3-hour assessment that mirrors real work. So you're not wasting time interviewing people who can't code. Second, we guarantee a 90-day retention. If they leave or you fire them in 90 days, we replace them free.\n\nPROSPECT: What does it cost?\n\nSARAH: 20% of first-year salary. Industry standard is 20-25%, so we're competitive. But the real savings is in time — our average time-to-fill is 18 days vs industry average of 42.\n\nPROSPECT: We've been burned by recruiters sending us unqualified candidates.\n\nSARAH: Yeah, that's exactly why we built the technical screen. Last quarter we placed 47 engineers, and our client satisfaction score was 94%.\n\nSequencer: Email Bison. Sender: Sarah Mitchell, Founder.",
+      "expected_output": "Strategy that extracts key details from the transcript (technical screen, 90-day guarantee, 18-day fill time, 47 placements, 94% satisfaction) and uses founder's own language",
+      "expectations": [
+        "Extracts company details from transcript without asking for them again (recruiting firm, software engineers, Series B-D companies)",
+        "Uses specific metrics from transcript: 3-hour technical screen, 90-day guarantee, 18-day time-to-fill, 47 placements, 94% satisfaction",
+        "Preserves founder's voice and language patterns from the transcript",
+        "ICP targets VP of Engineering, CTO, Head of Engineering at mid-size tech companies (Series B-D)",
+        "Pain points reference the specific objection from the transcript (unqualified candidates from other recruiters)",
+        "Identifies what's still MISSING after transcript analysis and asks targeted follow-up questions (not a full interview)",
+        "Offer positioning leverages the 90-day guarantee and technical screen as key differentiators",
+        "Does not fabricate information not present in the transcript"
+      ]
+    }
+  ]
+}

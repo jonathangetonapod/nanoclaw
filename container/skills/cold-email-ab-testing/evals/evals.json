@@ -1,0 +1,105 @@
+{
+  "skill_name": "cold-email-ab-testing",
+  "domain": "copywriting",
+  "evals": [
+    {
+      "id": 1,
+      "name": "pre-launch-full-workspace-email-bison",
+      "prompt": "Generate A/B test variants for the PostPilot campaign.\n\nWorkspace context: The file scripts/campaigns/postpilot-agencies/copy/sequence.md contains this 4-email sequence:\n\nE1 (The Pitch, Day 0): Subject: quick question about scheduling | Body: {Hi|Hey} {FIRST_NAME}, most agency owners I talk to are spending 6+ hours a week scheduling posts across client accounts. We built a tool that automates scheduling across 8+ client accounts. One 12-person agency went from posting 3x/week to daily across 8 accounts, saving 15 hours/week. Would it make sense if I showed you how it works? {Best|Cheers},\n{SENDER_EMAIL_SIGNATURE}\n\nE2 (The Nudge, Day 3): Subject: (threaded) | Body: {Hi|Hey} {FIRST_NAME}, just bumping this up. That agency I mentioned? They reclaimed 15 hours a week and doubled their engagement metrics. Figured it might be worth a quick look. {Best|Cheers},\n{SENDER_EMAIL_SIGNATURE}\n\nE3 (The Pivot, Day 7): Subject: different thought | Body: {Hi|Hey} {FIRST_NAME}, separate from the scheduling side, a lot of agency owners tell me they waste hours pulling client reports manually. Our dashboard consolidates analytics across all accounts in one view. Worth a 10-minute walkthrough? {Best|Cheers},\n{SENDER_EMAIL_SIGNATURE}\n\nE4 (The Breakup, Day 14): Subject: (threaded) | Body: {Hi|Hey} {FIRST_NAME}, totally get it if the timing is off. If client scheduling or reporting ever becomes a bottleneck, happy to chat. Either way, no hard feelings. {Best|Cheers},\n{SENDER_EMAIL_SIGNATURE}\n\nStrategy context from strategy.md: ICP is marketing agency owners, messaging angles are Pain Dagger (time scheduling), Proof Machine (15hr savings), Value Gift (free workflow audit). Sequencer: Email Bison.",
+      "expected_output": "A/B variants for all 4 email positions meeting 3/2/2/2 minimums, with descriptive labels, consistent tone within positions, verification gate checklist, and Email Bison spintax",
+      "expectations": [
+        "E1 (The Pitch) has at least 3 body variants including the control",
+        "E2 (The Nudge) has at least 2 body variants including the control",
+        "E3 (The Pivot) has at least 2 body variants including the control",
+        "E4 (The Breakup) has at least 2 body variants including the control",
+        "Total step count is 9 or more",
+        "Every variant has a descriptive label (e.g. 'Pain Dagger Opener', 'Social Proof Opener')",
+        "Variants within the same position change the approach/frame but keep tone and approximate length consistent",
+        "Email Bison spintax format used in all variants: {option1|option2|option3} NOT {{RANDOM | ...}}",
+        "Verification gate checklist is present with all positions checked off",
+        "Subject line variants provided (at least 2-3 per position)",
+        "Each variant clearly identifies which test variable it changes (angle, hook, proof point, value lever)",
+        "No em dashes or en dashes in any variant",
+        "{SENDER_EMAIL_SIGNATURE} token present in every variant",
+        "No spam trigger words (free, guarantee, act now, limited time, risk-free)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "pre-launch-bare-minimum-user-copy",
+      "prompt": "I need A/B variants for my campaign. Here are my 4 emails:\n\nE1: Hi {FIRST_NAME}, are you still handling bookkeeping manually? We help accounting firms automate their client bookkeeping. One firm cut processing time by 60%. Want me to show you how? Best, {SENDER_EMAIL_SIGNATURE}\n\nE2: Hi {FIRST_NAME}, just following up. That 60% time savings is pretty typical for firms our size. Worth a quick chat? Best, {SENDER_EMAIL_SIGNATURE}\n\nE3: Hi {FIRST_NAME}, different angle here. Beyond the time savings, most of our clients say the error reduction is what sold them. We caught $47K in discrepancies for one firm last quarter. Open to a 10-min call? Best, {SENDER_EMAIL_SIGNATURE}\n\nE4: Hi {FIRST_NAME}, no worries if now is not the right time. If bookkeeping ever becomes a bottleneck, happy to help. Best, {SENDER_EMAIL_SIGNATURE}\n\nSequencer: Email Bison.",
+      "expected_output": "Variants generated from user-provided copy without requiring a workspace or strategy file, meeting 3/2/2/2 minimums",
+      "expectations": [
+        "Does NOT refuse or ask for a strategy file before generating variants",
+        "E1 has at least 3 body variants",
+        "E2 has at least 2 body variants",
+        "E3 has at least 2 body variants",
+        "E4 has at least 2 body variants",
+        "Total steps >= 9",
+        "Variants have descriptive labels",
+        "Control copy is preserved as one of the variants (labeled as control)",
+        "New variants change the approach/angle, not just rephrase the same words",
+        "Verification gate checklist included and all positions pass",
+        "Email Bison spintax format used",
+        "No spam trigger words in any variant"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "pre-launch-instantly-spintax-format",
+      "prompt": "Generate A/B variants for our Instantly campaign.\n\nControl sequence:\nE1 (Day 0): Subject: quick question about hiring | Body: {{firstName}}, most staffing agency owners I meet are spending 20+ hours a week sourcing candidates manually. We built an AI recruiter that screens and shortlists candidates in minutes. One agency filled 3x more roles last quarter without adding headcount. Would it make sense to show you a quick demo? Best, {SENDER_EMAIL_SIGNATURE}\n\nE2 (Day 2): Subject: (threaded) | Body: {{firstName}}, bumping this up. That agency filled 3x more roles with the same team. Figured you might find it useful. Best, {SENDER_EMAIL_SIGNATURE}\n\nE3 (Day 5): Subject: idea for your team | Body: {{firstName}}, aside from sourcing speed, our clients say the biggest win is candidate quality. AI screens for culture fit and skill match simultaneously. Worth a 10-minute look? Best, {SENDER_EMAIL_SIGNATURE}\n\nE4 (Day 12): Subject: (threaded) | Body: {{firstName}}, totally understand if timing is off. If sourcing ever becomes a bottleneck, happy to show you what we built. Best, {SENDER_EMAIL_SIGNATURE}\n\nSequencer: Instantly. ICP: Staffing agency owners, 10-50 employees.",
+      "expected_output": "Variants using Instantly spintax format ({{RANDOM | ...}}) with proper {{firstName}} tokens, meeting minimums",
+      "expectations": [
+        "E1 has at least 3 body variants",
+        "E2 has at least 2 body variants",
+        "Total steps >= 9",
+        "Instantly spintax format used: {{RANDOM | option1 | option2 | option3}} NOT {option1|option2|option3}",
+        "Personalization token is {{firstName}} (Instantly format) in every variant",
+        "Variants have descriptive labels",
+        "Verification gate checklist present and passing",
+        "No em dashes or en dashes",
+        "Subject line variants provided for unthreaded positions",
+        "No spam trigger words",
+        "E1 variants test different angles (pain vs proof vs curiosity) not just word swaps"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "post-launch-winner-analysis-sufficient-data",
+      "prompt": "Analyze A/B test results for our brightsmile-dental campaign on Email Bison.\n\nCampaign analytics:\nE1 Variant A (Pain Dagger): 520 sent, 18 replies (3.46%)\nE1 Variant B (Social Proof): 490 sent, 8 replies (1.63%)\nE1 Variant C (Curiosity Hook): 505 sent, 12 replies (2.38%)\n\nE2 Variant A (Data Bump): 380 sent, 6 replies (1.58%)\nE2 Variant B (Question Bump): 375 sent, 9 replies (2.40%)\n\nE3 Variant A (Cost Savings): 290 sent, 7 replies (2.41%)\nE3 Variant B (Time Savings): 285 sent, 3 replies (1.05%)\n\nE4 Variant A (Redirect Close): 200 sent, 2 replies (1.00%)\nE4 Variant B (Humor Close): 195 sent, 4 replies (2.05%)\n\nBounce rate: 1.8% overall. Warmup scores: all senders 96+. Campaign running for 14 days.",
+      "expected_output": "Statistical analysis with z-test results, winner declarations or trending status per position, specific actionable recommendations with data",
+      "expectations": [
+        "Z-test or statistical significance calculation performed for each position's variant comparison",
+        "E1: Variant A (Pain Dagger) identified as leader at 3.46% vs 1.63% and 2.38%",
+        "Each position gets a status: winner declared, trending, equivalent, or insufficient data",
+        "Minimum 100 sends per variant requirement checked and noted",
+        "Specific recommendations name the exact variant labels and campaign",
+        "Recommendations include actual numbers (e.g. '3.46% reply rate after 520 sends')",
+        "Recommendations state a concrete action (e.g. 'deactivate Variant B, scale Variant A')",
+        "Bounce rate assessed against benchmarks (1.8% = healthy)",
+        "Warmup scores assessed (96+ = safe)",
+        "Cross-campaign pattern insights attempted (opening style, CTA type, subject format)",
+        "No generic advice like 'improve your subject lines' — every recommendation is specific",
+        "Performance benchmarks table referenced (reply rate: >= 3% excellent, >= 1% healthy)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "post-launch-insufficient-data-edge-case",
+      "prompt": "Check which variant is winning for our new campaign consulti-agencies on Instantly.\n\nAnalytics so far:\nE1 Variant A (RLM Sequences): 45 sent, 3 replies (6.67%)\nE1 Variant B (Pain Dagger): 42 sent, 1 reply (2.38%)\n\nE2 Variant A (Data Bump): 28 sent, 1 reply (3.57%)\nE2 Variant B (New Context): 30 sent, 0 replies (0%)\n\nE3 and E4: not yet reached (campaign is 4 days old).\n\nBounce rate: 2.1%. Warmup scores: 94-97 range.",
+      "expected_output": "Correctly identifies insufficient data for statistical analysis, does NOT declare winners, recommends continuing and provides volume needed",
+      "expectations": [
+        "Does NOT declare a winner for any position (all below 100 sends threshold)",
+        "Explicitly states the 100 sends minimum requirement is not met",
+        "Notes E1 Variant A is trending/leading but NOT significant",
+        "Does NOT recommend deactivating any variant yet",
+        "Recommends continuing the test and estimates sends needed for significance",
+        "E3 and E4 correctly noted as not yet reached (no data)",
+        "Bounce rate 2.1% assessed as healthy (under 3%)",
+        "Warmup scores assessed (94-97 = safe to continue)",
+        "No premature optimization recommendations",
+        "Advises patience with specific guidance (e.g. 'continue for 7+ more days' or 'need ~55 more sends per E1 variant')"
+      ]
+    }
+  ]
+}

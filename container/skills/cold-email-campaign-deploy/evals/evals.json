@@ -1,0 +1,90 @@
+{
+  "skill_name": "cold-email-campaign-deploy",
+  "domain": "configuration",
+  "evals": [
+    {
+      "id": 1,
+      "name": "email-bison-full-deployment",
+      "prompt": "Deploy a cold email campaign to Email Bison for a SaaS product called 'DataSync Pro' that helps e-commerce brands automate inventory sync. The workspace has:\n- strategy.md with ICP (e-commerce founders, 10-50 employees, US)\n- copy/sequence.md with 4 emails\n- ab-testing/variants.md with 3 variants on E1, 2 on E2, 2 on E3, 2 on E4 (9 total steps)\n- ab-schema.json with structured variant data\n\nSender accounts: 60 Email Bison accounts (IDs 5001-5060), 2 personas (Alex Chen - Founder, Sarah Park - Head of Growth). Campaign name: 'DataSync Pro - E-commerce Founders Q2'.\n\nGenerate the campaign brief, run the pre-launch checklist, and show me the exact API calls you would make to deploy this campaign.",
+      "expected_output": "Campaign brief with all 8 sections, pre-launch checklist with all gates addressed, correct Email Bison API calls with proper order values, variant linking, and settings",
+      "expectations": [
+        "Campaign brief contains all 8 sections (Discovery, ICP, Offer, Messaging, Sequence Architecture, Email Copy, Deployment Summary, Pre-Launch Checklist)",
+        "Pre-launch checklist addresses all 9 gates (1-8 plus 6.5 spintax format)",
+        "API call 1: POST /campaigns with campaign name and type:email",
+        "API call 2: POST /campaigns/v1.1/{id}/sequence-steps with all 9 steps having UNIQUE order values (1-9)",
+        "Variant linking uses variant_from_step (positional index), NOT variant_from_step_id",
+        "API call 3: POST /campaigns/{id}/attach-sender-emails with IDs 5001-5060",
+        "API call 4: PATCH /campaigns/{id}/update with open_tracking:false, plain_text:true, max_emails_per_day:1800 (60x30)",
+        "Campaign created in PAUSED state, never auto-activated",
+        "Post-deployment report includes campaign ID, step count (9), sender count (60), and next steps",
+        "Spintax uses Email Bison format {a|b|c}, NOT Instantly format"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "instantly-full-deployment",
+      "prompt": "Deploy a cold email campaign to Instantly for a marketing agency called 'GrowthLab' that does paid ads management. The workspace has all upstream artifacts ready:\n- strategy.md, copy/sequence.md, ab-testing/variants.md\n- 4 emails with 3/2/2/2 variant structure (9 total)\n- Target: agency owners, 5-25 employees, US\n\nSender accounts are already configured in Instantly with warmup enabled. Campaign name: 'GrowthLab - Agency Owners'.\n\nGenerate the campaign brief and show me the exact Instantly API calls.",
+      "expected_output": "Campaign brief, correct Instantly API payload with sequences structure, campaign_schedule, and proper HTML formatting",
+      "expectations": [
+        "API payload uses POST /campaigns with full sequences structure embedded",
+        "campaign_schedule.schedules array is present and non-empty with timing, days, and timezone",
+        "All email bodies use <p> tags, NEVER <br> tags",
+        "Follow-up emails (E2, E4) use empty subject '' for threading",
+        "Variants nested inside each step's variants array",
+        "Spintax uses Instantly format {{RANDOM | a | b | c}}, NOT Email Bison format",
+        "Personalization tokens use {{firstName}} (camelCase), NOT {FIRST_NAME}",
+        "Settings PATCH includes open_tracking:false, link_tracking:false, text_only:true",
+        "Campaign created as status 0 (draft), never auto-activated",
+        "Post-deployment mentions leads must be added separately via POST /leads"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "pre-launch-gate-failures",
+      "prompt": "I want to deploy a campaign to Email Bison. Here's the situation:\n- Warmup has only been running for 2 weeks (not 4)\n- Bounce rate on the lead list is 4.8%\n- We have 2 variants on E1, 1 on E2, 1 on E3, 1 on E4 (5 total steps)\n- The emails use Instantly spintax format {{RANDOM | a | b}} but we're deploying to Email Bison\n- Open tracking is currently enabled in the campaign settings\n\nRun the pre-launch checklist and tell me what needs to be fixed.",
+      "expected_output": "Clear identification of all gate failures with specific remediation steps",
+      "expectations": [
+        "Gate 1 FAIL: Bounce rate 4.8% exceeds 3% threshold — re-verify or clean list",
+        "Gate 2 FAIL: Warmup only 2 weeks, needs 4+ weeks minimum",
+        "Gate 4 FAIL: Open tracking must be disabled",
+        "Gate 6.5 FAIL: Wrong spintax format — Instantly format detected, needs Email Bison format",
+        "Gate 7 FAIL: E1 needs >= 3 variants (has 2), E2-E4 need >= 2 each (have 1), total 5 < 9 minimum",
+        "Does NOT approve deployment — blocks until all gates pass",
+        "Provides specific remediation for each failure (not just 'fix it')",
+        "Correctly identifies passing gates (DNS, plain text, signatures) if applicable"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "error-recovery-scenario",
+      "prompt": "I'm deploying a campaign to Email Bison. The campaign was created (ID 500) and sequence steps were created successfully (9 steps). But when I tried to attach sender emails, I got a 500 Internal Server Error. What should I do? Also, what if the step creation had failed instead — some steps were created but not all?",
+      "expected_output": "Specific recovery guidance for both scenarios referencing the Error Recovery section",
+      "expectations": [
+        "For sender attach failure: Campaign and steps are intact, retry the attach call",
+        "Suggests retry with backoff (1s, 2s, 4s) up to 3 times",
+        "If retry fails: Can attach senders via sequencer UI as fallback",
+        "Log campaign ID and step IDs to deployment-log.md for audit trail",
+        "For partial step creation: Delete ALL created steps, fix the issue, recreate full sequence",
+        "Warns against editing individual steps (breaks variant linking)",
+        "Notes campaign is PAUSED so no risk of sending to prospects",
+        "Does NOT suggest deleting the campaign unless steps can't be fixed"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "missing-upstream-artifacts",
+      "prompt": "I want to deploy a campaign to Instantly but I only have the email copy written in a Google Doc — no strategy.md, no ab-testing/variants.md, no ab-schema.json. The copy has 4 emails but only 1 variant per email (no A/B testing done). Can you deploy this?",
+      "expected_output": "Identifies missing required artifacts, explains what's needed, suggests running upstream skills",
+      "expectations": [
+        "Identifies ab-testing/variants.md as REQUIRED (missing)",
+        "Identifies copy/sequence.md as REQUIRED — Google Doc content needs to be formatted into workspace",
+        "Notes strategy.md is recommended but not required",
+        "Flags that 1 variant per email fails A/B verification gate (needs 3/2/2/2 minimum)",
+        "Recommends running cold-email-ab-testing skill first to generate variants",
+        "Does NOT proceed with deployment — blocks on missing required artifacts",
+        "Offers to help format the Google Doc content into copy/sequence.md if user provides it",
+        "Mentions the skill chain: strategy -> copywriting -> ab-testing -> deploy"
+      ]
+    }
+  ]
+}
