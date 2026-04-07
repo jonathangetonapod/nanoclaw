@@ -65,7 +65,14 @@ export class GroupQueue {
     const state = this.getGroup(groupJid);
 
     if (state.active) {
-      state.pendingMessages = true;
+      // Don't set pendingMessages if the container is still processing the
+      // initial request — it already reads ALL pending messages from the DB.
+      // Only set it if the container has moved to idle-waiting (finished work,
+      // waiting for IPC input), meaning new messages genuinely arrived after
+      // the initial batch was consumed.
+      if (state.idleWaiting) {
+        state.pendingMessages = true;
+      }
       logger.debug({ groupJid }, 'Container active, message queued');
       return;
     }
@@ -357,19 +364,23 @@ export class GroupQueue {
   async shutdown(_gracePeriodMs: number): Promise<void> {
     this.shuttingDown = true;
 
-    // Count active containers but don't kill them — they'll finish on their own
-    // via idle timeout or container timeout. The --rm flag cleans them up on exit.
-    // This prevents WhatsApp reconnection restarts from killing working agents.
+    // Kill active containers on shutdown to prevent orphans that respond
+    // to messages after the new process starts (causing duplicate replies).
     const activeContainers: string[] = [];
     for (const [_jid, state] of this.groups) {
       if (state.process && !state.process.killed && state.containerName) {
         activeContainers.push(state.containerName);
+        try {
+          state.process.kill('SIGTERM');
+        } catch {
+          // ignore — process may have already exited
+        }
       }
     }
 
     logger.info(
-      { activeCount: this.activeCount, detachedContainers: activeContainers },
-      'GroupQueue shutting down (containers detached, not killed)',
+      { activeCount: this.activeCount, killedContainers: activeContainers },
+      'GroupQueue shutting down (containers killed)',
     );
   }
 }
