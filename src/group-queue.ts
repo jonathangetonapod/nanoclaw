@@ -82,6 +82,13 @@ export class GroupQueue {
       return;
     }
 
+    // Mark active synchronously to prevent duplicate spawns when multiple
+    // enqueueMessageCheck calls arrive in the same tick (e.g., recovery +
+    // message loop). runForGroup sets this too, but it's async — without
+    // this guard the second call slips past the state.active check above.
+    state.active = true;
+    this.activeCount++;
+
     this.runForGroup(groupJid, 'messages').catch((err) =>
       logger.error({ groupJid, err }, 'Unhandled error in runForGroup'),
     );
@@ -198,11 +205,14 @@ export class GroupQueue {
     reason: 'messages' | 'drain',
   ): Promise<void> {
     const state = this.getGroup(groupJid);
-    state.active = true;
+    // Only increment if not already marked active by enqueueMessageCheck
+    if (!state.active) {
+      state.active = true;
+      this.activeCount++;
+    }
     state.idleWaiting = false;
     state.isTaskContainer = false;
     state.pendingMessages = false;
-    this.activeCount++;
 
     logger.debug(
       { groupJid, reason, activeCount: this.activeCount },

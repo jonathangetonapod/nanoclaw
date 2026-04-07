@@ -229,6 +229,34 @@ function buildVolumeMounts(
     readonly: false,
   });
 
+  // Google Workspace credentials (read-only) for gws.sh API helper
+  const gwsConfigDir = path.join(
+    process.env.HOME || '/root',
+    '.config',
+    'gws',
+  );
+  if (fs.existsSync(gwsConfigDir)) {
+    mounts.push({
+      hostPath: gwsConfigDir,
+      containerPath: '/home/node/.config/gws',
+      readonly: true,
+    });
+  }
+
+  // GitHub token (read-only) for github.sh API helper
+  const githubConfigDir = path.join(
+    process.env.HOME || '/root',
+    '.config',
+    'github',
+  );
+  if (fs.existsSync(githubConfigDir)) {
+    mounts.push({
+      hostPath: githubConfigDir,
+      containerPath: '/home/node/.config/github',
+      readonly: true,
+    });
+  }
+
   // Additional mounts validated against external allowlist (tamper-proof from containers)
   if (group.containerConfig?.additionalMounts) {
     const validatedMounts = validateAdditionalMounts(
